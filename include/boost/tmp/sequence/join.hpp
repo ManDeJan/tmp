@@ -9,6 +9,7 @@
 //  http://www.boost.org/LICENSE_1_0.txt
 
 #include "../detail/dispatch.hpp"
+#include "../vocabulary.hpp"
 
 namespace boost{
     namespace tmp{
