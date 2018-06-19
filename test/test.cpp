@@ -1,5 +1,6 @@
 #include "transform_test.hpp"
 #include "filter_test.hpp"
+#include "join_test.hpp"
 #include "fold_left_test.hpp"
 #include "zip_with_index_test.hpp"
 
