@@ -26,7 +26,9 @@ namespace filter_test {
 
 
             constexpr auto xs1 = tmp::pack_(
-
+                    int_<1>{},int_<1>{},int_<1>{},int_<1>{},int_<1>{},int_<1>{},int_<1>{},int_<1>{},int_<1>{},int_<1>{},int_<1>{},int_<1>{},int_<1>{},
+                    int_<1>{},int_<1>{},int_<1>{},int_<1>{},int_<1>{},int_<1>{},int_<1>{},int_<1>{},int_<1>{},int_<1>{},int_<1>{},int_<1>{},int_<1>{},
+                    int_<1>{},int_<1>{},int_<1>{},int_<1>{},int_<1>{},int_<1>{},int_<1>{},int_<1>{},int_<1>{},int_<1>{},int_<1>{},int_<1>{},int_<1>{}
             );
 
             constexpr auto result1 = xs1 >>= tmp::filter_<lift_<is_even>>{};
