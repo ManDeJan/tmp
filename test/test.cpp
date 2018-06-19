@@ -4,8 +4,8 @@
 #include "fold_left_test.hpp"
 #include "zip_with_index_test.hpp"
 
-#include "../include/boost/tmp.hpp"
+//#include "../include/boost/tmp.hpp"
 
 int main(){
-    return transform_test::run() || fold_left_test::run()|| zip_with_index_test::run();
+    return join_test::run() || transform_test::run() || fold_left_test::run()|| zip_with_index_test::run();
 }

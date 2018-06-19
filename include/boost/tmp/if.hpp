@@ -36,6 +36,11 @@ namespace boost{
                 template<typename...Ts>
                 using f = typename dispatch<(N+(N>sizeof...(Ts))),typename if_impl<call_<P,Ts...>::value>::template f<T,F>>::template f<Ts...>;
             };
+            template<template<typename...> class P, typename T, typename F>
+            struct dispatch<1,if_<lift_<P>,T,F>>{
+                template<typename U>
+                using f = typename dispatch<1,typename if_impl<P<U>::value>::template f<T,F>>::template f<T>;
+            };
         }
     }
 }
