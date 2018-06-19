@@ -19,7 +19,7 @@ namespace boost{
             struct fast_pack : Ts... {
 
                 template<typename...As, typename = std::enable_if_t<(sizeof...(Ts) == sizeof...(As))>>
-                fast_pack(As&&...args):Ts{std::forward<As>(args)}...{}
+                constexpr fast_pack(As&&...args):Ts{std::forward<As>(args)}... {}
             };
 
             template<typename T>
@@ -28,7 +28,7 @@ namespace boost{
                         std::is_same<
                                 std::remove_reference_t<
                                         std::remove_const_t<A>>,fast_pack<T>>::value)>>
-                fast_pack(A&& arg):T{std::forward<A>(arg)}{}
+                constexpr fast_pack(A&& arg):T{std::forward<A>(arg)}{}
             };
 
             template<>
@@ -55,7 +55,7 @@ namespace boost{
         }
 
         template<typename...Ts>
-        auto pack_(Ts...args){
+        constexpr auto pack_(Ts...args){
             return call_<zip_with_index_<
                     lift_<fusion::detail::indexed_base>,
                     lift_<fusion::fast_pack>>,

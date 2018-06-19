@@ -21,6 +21,7 @@
 #include "../sequence/unpack.hpp"
 #include "../sequence/size.hpp"
 #include "../sequence/make_sequence.hpp"
+#include "../detail/expression.hpp"
 
 namespace boost {
 	namespace tmp {
@@ -39,7 +40,7 @@ namespace boost {
 				filter_<F,listify_> head;
 				Tail tail;
 				template<typename...Is, typename...Ns, typename...Ts>
-				auto f(list_<list_<Is...>,list_<Ns...>>, Ts...as){
+				constexpr auto f(list_<list_<Is...>,list_<Ns...>>, Ts...as){
 					auto p = fast_pack<detail::indexed_base<Ns,Ts>...>{std::forward<Ts>(as)...};
 					return tail.f(typename Tail::template exec<typename Is::type...>{}, static_cast<Is&>(p).data... );
 				};
@@ -50,7 +51,7 @@ namespace boost {
 			struct ast<filter_<F,listify_>,listify_>{  //break recursion
 				filter_<F,listify_> head;
 				template<typename...Is, typename...Ns, typename...Ts>
-				auto f(list_<list_<Is...>,list_<Ns...>>, Ts...as){
+				constexpr auto f(list_<list_<Is...>,list_<Ns...>>, Ts...as){
 					auto p = fast_pack<detail::indexed_base<Ns,Ts>...>{std::forward<Ts>(as)...};
 					return pack_(static_cast<Is&>(p).data... );
 				};
@@ -70,11 +71,16 @@ namespace boost {
 		}
 
 		namespace detail {
-			template<unsigned N, typename F, typename C>
-			struct dispatch<N,filter_<F,C>>{
-				template <typename... Ts>
-				using f = typename dispatch<(N + (N>sizeof...(Ts))), join_<C>>::template f<typename dispatch<1,if_<F,listify_,always_<list_<>>>>::template f<Ts>...>;
-			};
+            template<typename F, typename C>
+            struct dispatch<0,filter_<F,C>>{
+                template <typename... Ts>
+                using f = typename dispatch<0,C>::template f<Ts...>;
+            };
+            template<unsigned N, typename F, typename C>
+            struct dispatch<N,filter_<F,C>>{
+                template <typename... Ts>
+                using f = typename dispatch<(N + (N>sizeof...(Ts))), join_<C>>::template f<typename dispatch<1,if_<F,listify_,always_<list_<>>>>::template f<Ts>...>;
+            };
 		}
 	}
 }

@@ -23,11 +23,11 @@ namespace boost{
                 H head;
                 T tail;
 
-                ast<T,H> reverse() {
+                constexpr ast<T,H> reverse() {
                     return {tail,head};
                 }
                 template<typename U>
-                ast<T,ast<H,U>> reverse(U&& u){
+                constexpr ast<T,ast<H,U>> reverse(U&& u){
                     return {std::move(tail),{std::move(head),std::move(u)}};
                 };
             };
@@ -36,10 +36,10 @@ namespace boost{
                     H head;
                     expr<EH,ET> tail;
                 template<typename U>
-                auto reverse(U&& out){
+                constexpr auto reverse(U&& out){
                     return tail.reverse(ast<H,U>{std::move(head),std::move(out)});
                 }
-                auto reverse(){
+                constexpr auto reverse(){
                     return tail.reverse(ast<H,identity_>{std::move(head),{}});
                 }
             };
@@ -57,7 +57,7 @@ namespace boost{
                     using exec = int;
                     T fun;
                     template<typename X, typename...Ts>
-                    auto f(X,Ts...as){
+                    constexpr auto f(X,Ts...as){
                         return fun(as...);
                     };
                 };
@@ -65,7 +65,7 @@ namespace boost{
                 template<typename T, typename = void>
                 struct make_expr{
                     template<typename L, typename R>
-                    expr<exec_callable<T>,L> operator()(L l,R r){
+                    constexpr expr<exec_callable<T>,L> operator()(L l,R r){
                         return {{r},l};
                     }
                 };
@@ -78,7 +78,7 @@ namespace boost{
                 template<typename T>
                 struct make_expr<T,typename voider<typename rebind<T>::type>::type>{
                     template<typename L, typename R>
-                    expr<typename rebind<T>::type,L> operator()(L l,R r){
+                    constexpr expr<typename rebind<T>::type,L> operator()(L l,R r){
                         return {{},l};
                     }
                 };

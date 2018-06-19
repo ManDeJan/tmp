@@ -22,8 +22,10 @@ namespace boost{
         struct uint_{
             static constexpr unsigned long long value = V;
         };
-        template<long long>
-        struct int_{};
+        template<long long I>
+        struct int_{
+            static constexpr long long value = I;
+        };
         template<bool B>
         struct bool_{
             static constexpr bool value = B;
