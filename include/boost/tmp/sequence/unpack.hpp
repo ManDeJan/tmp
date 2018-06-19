@@ -16,17 +16,17 @@ namespace boost{
 		template <typename C>
 		struct unpack_{};
 		namespace detail{
-			template <unsigned N, typename C, typename L, typename... Ts>
+			template <typename C, typename L, typename... Ts>
 			struct unpack_impl;
-			template <unsigned N, typename C, template <typename...> class Seq, typename... Ls, typename... Ts>
-			struct unpack_impl<N, C, Seq<Ls...>, Ts...> {
-				using type = typename dispatch<find_dispatch((N -1) + sizeof...(Ls)),C>::template f<Ts..., Ls...>;
+			template <typename C, template <typename...> class Seq, typename... Ls, typename... Ts>
+			struct unpack_impl<C, Seq<Ls...>, Ts...> {
+				using type = typename dispatch<find_dispatch(sizeof...(Ts) + sizeof...(Ls)),C>::template f<Ts..., Ls...>;
 			};
 
-			template<unsigned N, typename C>
-			struct dispatch<N,unpack_<C>>{
-				template <typename... Ls>
-				using f = typename detail::unpack_impl<N, C, Ls...>::type;
+			template<typename C>
+			struct dispatch<1,unpack_<C>>{
+				template <typename L>
+				using f = typename detail::unpack_impl<C, L>::type;
 			};
 		}
     }
