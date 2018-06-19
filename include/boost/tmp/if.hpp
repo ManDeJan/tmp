@@ -10,6 +10,12 @@
 
 #include "vocabulary.hpp"
 
+#if defined(__has_builtin)
+#   if __has_builtin(__type_pack_element)
+#       define BOOST_TMP_USE_TYPE_PACK_ELEMENT_INTRINSIC
+#   endif
+#endif
+
 namespace boost{
     namespace tmp {
         template<typename P, typename T, typename F = always_<nothing_>>
@@ -36,10 +42,14 @@ namespace boost{
                 template<typename...Ts>
                 using f = typename dispatch<(N+(N>sizeof...(Ts))),typename if_impl<call_<P,Ts...>::value>::template f<T,F>>::template f<Ts...>;
             };
-            template<template<typename...> class P, typename T, typename F>
-            struct dispatch<1,if_<lift_<P>,T,F>>{
+            template<template<typename...> class P>
+            struct dispatch<1,if_<lift_<P>,listify_,always_<list_<>>>>{
                 template<typename U>
-                using f = typename dispatch<1,typename if_impl<P<U>::value>::template f<T,F>>::template f<T>;
+#if defined(BOOST_TMP_USE_TYPE_PACK_ELEMENT_INTRINSIC)
+                using f = __type_pack_element<(P<U>::value!=0),list_<U>,list_<>>;
+#else
+                using f = typename if_impl<P<U>::value>::template f<list_<U>,list_<>>;
+#endif
             };
         }
     }
