@@ -1,15 +1,10 @@
-#include "../include/boost/tmp/algorithm/transform.hpp"
+#include "test_util.hpp"
 
 namespace transform_test {
-    using namespace boost::tmp;
-
-    template<typename T>
-    using intify = int;
-
     int run() {
-        list_<int,int> lhs = call_<transform_<lift_<intify>>,bool,char>{};
-
-//        transform<>{} << [](){};
+        using rhs = make_sequence_<identity_,transform_<listify_>>;
+        using lhs = make_sequence_<listify_>;
+        call_<make_sequence_<make_algo<lhs>>,extent>{} = call_<make_sequence_<make_algo<rhs>>,extent>{};
 
         return 0;
     }

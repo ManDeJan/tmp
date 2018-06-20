@@ -53,6 +53,7 @@ namespace boost {
 				template<typename...Is, typename...Ns, typename...Ts>
 				constexpr auto f(list_<list_<Is...>,list_<Ns...>>, Ts...as){
 					auto p = fast_pack<detail::indexed_base<Ns,Ts>...>{std::forward<Ts>(as)...};
+					(void)p;
 					return pack_(static_cast<Is&>(p).data... );
 				};
 				template<typename...Ts>

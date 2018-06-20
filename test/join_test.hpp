@@ -1,29 +1,21 @@
-#include "../include/boost/tmp/sequence/join.hpp"
-#include "../include/boost/tmp/call.hpp"
+#include "test_util.hpp"
 
 
 namespace join_test {
-    using namespace boost::tmp;
+    template<typename...>
+    struct l{};
 
-    template<int, int> struct x;
+    template<typename T>
+    struct highlander{};
 
-    using li = list_<x<1, 0>, x<1, 1>, x<1, 2>, x<1, 3>, x<1, 4>, x<1, 5>, x<1, 6>, x<1, 7>, x<1, 8>, x<1, 9>>;
+int run() {
+        using make_listified_sequence = make_sequence_<listify_,push_front_<list_<>,join_<>>>;
+        call_<make_sequence_<make_algo<make_sequence_<>>>,extent>{} = call_<make_sequence_<make_algo<make_listified_sequence>>,extent>{};
+        using make_lified_sequence = make_sequence_<lift_<l>,push_front_<list_<>,join_<>>>;
+        call_<make_sequence_<make_algo<make_sequence_<>>>,extent>{} = call_<make_sequence_<make_algo<make_lified_sequence>>,extent>{};
+        using make_highlanderified_sequence = make_sequence_<lift_<highlander>,push_front_<list_<>,join_<>>>;
+        call_<make_sequence_<make_algo<make_sequence_<>>>,extent>{} = call_<make_sequence_<make_algo<make_highlanderified_sequence>>,extent>{};
 
-    int run() {
-        using g1 = call_<join_<>, li>;
-        using g2 = call_<join_<>, li, li>;
-        using g3 = call_<join_<>, li, li, li>;
-        using g4 = call_<join_<>, li, li, li, li>;
-        using g5 = call_<join_<>, li, li, li, li, li>;
-        using g6 = call_<join_<>, li, li, li, li, li, li, li>;
-        using g7 = call_<join_<>, li, li, li, li, li, li, li, li>;
-        using g8 = call_<join_<>, li, li, li, li, li, li, li, li, li>;
-        using g9 = call_<join_<>, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li>;
-        using g10 = call_<join_<>, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li>;
-        using g11 = call_<join_<>, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li>;
-        using g12 = call_<join_<>, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li>;
-        using g13 = call_<join_<>, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li>;
-        using g14 = call_<join_<>, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li, li>;
         return 0;
     }
 }

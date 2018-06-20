@@ -14,7 +14,7 @@
 
 namespace boost{
     namespace tmp{
-    	template<typename F, typename C = listify_>
+    	template<typename F = listify_, typename C = listify_>
     	struct zip_with_index_{};
 		namespace detail{
 			template<unsigned N, typename T = std::make_index_sequence<N>>

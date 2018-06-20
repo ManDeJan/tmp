@@ -1,13 +1,13 @@
-#include "../include/boost/tmp/sequence/zip_with_index.hpp"
+#include "test_util.hpp"
 
 namespace zip_with_index_test {
-    using namespace boost::tmp;
-
     template<typename T>
-    using intify = int;
+    using doubleify = list_<T,T>;
 
     int run() {
-        list_<list_<uint_<0>,bool>,list_<uint_<1>,char>> lhs = call_<zip_with_index_<listify_>,bool,char>{};
+        using lhs = make_sequence_<lift_<doubleify>>;
+        using rhs = make_sequence_<identity_,zip_with_index_<>>;
+        call_<make_sequence_<make_algo<lhs>>,extent>{} = call_<make_sequence_<make_algo<rhs>>,extent>{};
 
         return 0;
     }
