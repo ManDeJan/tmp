@@ -22,7 +22,7 @@ namespace boost {
 		struct remove_if_ {};
 		namespace detail {
 			template<unsigned N, typename F, typename C>
-			struct dispatch<N,remove_if_<F,C>> : dispatch<N,transform_<if_<F,always_<list_<>>,listify_>>,join_<C>>{};
+			struct dispatch<N,remove_if_<F,C>> : dispatch<N,transform_<if_<F,always_<list_<>>,listify_>,join_<C>>>{};
 		}
 	}
 }
