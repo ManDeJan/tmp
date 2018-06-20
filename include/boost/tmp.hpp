@@ -28,6 +28,7 @@
 #include "tmp/algorithm/fold_right.hpp"
 #include "tmp/algorithm/remove_if.hpp"
 #include "tmp/algorithm/transform.hpp"
+#include "tmp/detail/expression.hpp"
 #include "tmp/sequence/at.hpp"
 #include "tmp/sequence/container.hpp"
 #include "tmp/sequence/each.hpp"
