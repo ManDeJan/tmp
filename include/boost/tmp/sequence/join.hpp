@@ -18,6 +18,11 @@ namespace boost{
         struct join_ {};
         namespace detail{
             template<typename C>
+            struct dispatch<0,join_<C>>{
+                template <typename T>
+                using f = typename dispatch<0,C>::template f<>;
+            };
+            template<typename C>
             struct dispatch<1,join_<C>>{
                 template <typename T>
                 using f = call_<unpack_<C>,T>;

@@ -14,6 +14,7 @@
 #include "../sequence/join.hpp"
 #include "../if.hpp"
 #include "../always.hpp"
+#include "transform.hpp"
 
 namespace boost {
 	namespace tmp {
@@ -21,10 +22,7 @@ namespace boost {
 		struct remove_if_ {};
 		namespace detail {
 			template<unsigned N, typename F, typename C>
-			struct dispatch<N,remove_if_<F,C>>{
-				template <typename... Ts>
-				using f = typename dispatch<N, join_<C>>::template f<typename dispatch<1,if_<F,always_<list_<void>>,always_<list_<>>>>::template f<Ts>...>;
-			};
+			struct dispatch<N,remove_if_<F,C>> : dispatch<N,transform_<if_<F,always_<list_<>>,listify_>>,join_<C>>{};
 		}
 	}
 }
